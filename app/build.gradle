@@ -43,4 +43,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
+    // dependency for circular ImageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }

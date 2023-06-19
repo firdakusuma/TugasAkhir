@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TugasAkhir</string>
+    <string name="app_name">FinalProject</string>
     <string name="bahan_bakar">Info bahan bakar: \nPenuh ke Penuh</string>
     <string name="mobil_tersedia">Mobil yang tersedia di \nDekat Anda</string>
     <string name="title_activity_maps2">MapsActivity2</string>

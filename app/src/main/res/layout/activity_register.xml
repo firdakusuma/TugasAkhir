@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="429dp"
+        android:layout_height="170dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.388"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/unsplash_3yikpabbgbk" />
+
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="417dp"
+        android:layout_height="625dp"
+        android:layout_marginTop="124dp"
+        android:background="@drawable/backdrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView5" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat"
+        android:text="Selamat Datang!"
+        android:textColor="#121515"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/inter"
+        android:text="Daftarkan akun CAR-RENT Anda"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+
+    <EditText
+        android:id="@+id/et_nama"
+        android:layout_width="346dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/edittext"
+        android:fontFamily="@font/montserrat"
+        android:hint="Enter Your Name"
+        android:textColorHint="#FFFFFFFF"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="15dp"
+        android:textAlignment="textStart"
+        android:textColor="#FFFFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <EditText
+        android:id="@+id/et_email"
+        android:layout_width="346dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edittext"
+        android:fontFamily="@font/montserrat"
+        android:hint="Enter Your Email"
+        android:textColorHint="#FFFFFFFF"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="15dp"
+        android:textAlignment="textStart"
+        android:textColor="#FFFFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_nama" />
+
+    <EditText
+        android:id="@+id/et_pass"
+        android:layout_width="346dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edittext"
+        android:fontFamily="@font/montserrat"
+        android:hint="Enter Your Password"
+        android:textColorHint="#FFFFFFFF"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="15dp"
+        android:password="true"
+        android:textAlignment="textStart"
+        android:textColor="#FFFFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_email" />
+
+
+    <TextView
+        android:id="@+id/btn_masuk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="68dp"
+        android:fontFamily="@font/inter"
+        android:text="Saya Sudah Punya Akun"
+        android:textColor="#121515"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.935"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_noHP" />
+
+    <EditText
+        android:id="@+id/et_ttl"
+        android:layout_width="346dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edittext"
+        android:fontFamily="@font/montserrat"
+        android:hint="Enter Your Birth Date"
+        android:textColorHint="#FFFFFFFF"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="15dp"
+        android:textAlignment="textStart"
+        android:textColor="#FFFFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_alamat" />
+
+    <EditText
+        android:id="@+id/et_alamat"
+        android:layout_width="346dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/edittext"
+        android:fontFamily="@font/montserrat"
+        android:hint="Enter Your Address"
+        android:textColorHint="#FFFFFFFF"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="15dp"
+        android:textAlignment="textStart"
+        android:textColor="#FFFFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_pass" />
+
+    <EditText
+        android:id="@+id/et_noHP"
+        android:layout_width="346dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edittext"
+        android:fontFamily="@font/montserrat"
+        android:hint="Enter Your Phone Number"
+        android:textColorHint="#FFFFFFFF"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="15dp"
+        android:textAlignment="textStart"
+        android:textColor="#FFFFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_ttl" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_daftar"
+        android:layout_width="426dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/buttondaftar"
+        android:text="Daftar"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_masuk" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
