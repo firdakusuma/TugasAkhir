@@ -9,7 +9,7 @@ public class ModelUser {
     private String alamat;
 //    private String avatar;
 
-    public modelUser(String nama, String pass, String email, String TTL, String noHP, String alamat) {
+    public ModelUser(String nama, String pass, String email, String TTL, String noHP, String alamat) {
         this.nama = nama;
         this.pass = pass;
         this.email = email;
@@ -28,7 +28,7 @@ public class ModelUser {
 //        this.alamat = alamat;
 //    }
 
-    public modelUser(){}
+    public ModelUser(){}
 
 //    public String getAvatar() {
 //        return avatar;

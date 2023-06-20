@@ -16,6 +16,12 @@
         <activity
             android:name=".splashScreen"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Register"
             android:exported="false" />
@@ -55,6 +61,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDdBZ2p5-2GM2nkpd1k2SxSEH3qezXi45E" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
         <activity
             android:name=".MapsActivity2"
@@ -69,13 +78,6 @@
         <activity
             android:name=".OverviewActivity"
             android:exported="false" />
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".BookingActivity" />
         <activity android:name=".KonfirmasiActivity" />
         <activity android:name=".MapsActivity" />

@@ -25,11 +25,22 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class editprofile extends AppCompatActivity {
 
@@ -77,7 +88,7 @@ public class editprofile extends AppCompatActivity {
         btnEditBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editProfile.this.finish();
+                editprofile.this.finish();
             }
         });
 
@@ -105,7 +116,7 @@ public class editprofile extends AppCompatActivity {
     // metode untuk upload gambar
     private void selectImage(){
         final CharSequence[] items = {"Ambil Gambar", "Pilih dari Galeri", "Batal"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(editProfile.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(editprofile.this);
         builder.setItems(items, (dialog, item) -> {
             if (items[item].equals("Ambil Gambar")){
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -185,15 +196,15 @@ public class editprofile extends AppCompatActivity {
                                 if (task.getResult()!= null){
                                     task.getResult().toString();
                                 } else {
-                                    Toast.makeText(editProfile.this, "Gagal", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(editprofile.this, "Gagal", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
                     } else {
-                        Toast.makeText(editProfile.this, "Gagal", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(editprofile.this, "Gagal", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(editProfile.this, "Gagal", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(editprofile.this, "Gagal", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -229,7 +240,7 @@ public class editprofile extends AppCompatActivity {
                     String dbPass = snapshot.child(namaUser).child("pass").getValue(String.class);
                     String dbAva = snapshot.child(namaUser).child("avatar").getValue(String.class);
 
-                    Intent intent = new Intent(editProfile.this, Profile.class);
+                    Intent intent = new Intent(editprofile.this, Profile.class);
                     intent.putExtra("source", "editProfile");
                     intent.putExtra("nama", dbNama);
                     intent.putExtra("pass", dbPass);

@@ -2,8 +2,10 @@ package com.example.tugasakhir;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,14 +13,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class dashboard extends AppCompatActivity implements View.OnClickListener {
+public class dashboard extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private MobilAdapter mobilAdapter = new MobilAdapter(generateMobilList());
     TextView tvName;
+    ImageView imgPhoto;
 
 
     @SuppressLint("MissingInflatedId")
@@ -28,7 +38,14 @@ public class dashboard extends AppCompatActivity implements View.OnClickListener
         setContentView(R.layout.activity_main);
 
         tvName = findViewById(R.id.tvName);
-        tvName.setOnClickListener(this);
+        imgPhoto = findViewById(R.id.imgPhoto);
+        tvName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getDataFromLogin();
+                passData();
+            }
+        });
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -104,12 +121,5 @@ public class dashboard extends AppCompatActivity implements View.OnClickListener
         mobilList.add(new Mobil("Honda Civic", "Manual", "Rp.200.000/hari"));
         // Tambahkan data mobil lainnya sesuai kebutuhan
         return mobilList;
-    }
-
-    @Override
-    public void onClick(View view) {
-        // menerima intent dari login
-        getDataFromLogin();
-        passData();
     }
 }

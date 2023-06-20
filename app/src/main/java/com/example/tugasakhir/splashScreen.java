@@ -26,7 +26,7 @@ public class splashScreen extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v == btnDaftar) {
-            Intent intent = new Intent(splashScreen.this, MainActivity.class);
+            Intent intent = new Intent(splashScreen.this, Register.class);
             startActivity(intent);
         }
         else {

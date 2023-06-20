@@ -42,10 +42,10 @@ public class MainActivity extends AppCompatActivity {
     private List<Mobil> generateMobilList() {
         List<Mobil> mobilList = new ArrayList<>();
         mobilList.add(new Mobil("Honda Civic", "Automatic", "Rp.200.000/hari"));
-        mobilList.add(new Mobil("Honda Civic", "Manual", "Rp.150.000/hari"));
-        mobilList.add(new Mobil("Honda Civic", "Automativ", "Rp.350.000/hari"));
-        mobilList.add(new Mobil("Honda Civic", "Manual", "Rp.200.000/hari"));
-        mobilList.add(new Mobil("Honda Civic", "Manual", "Rp.200.000/hari"));
+        mobilList.add(new Mobil("Honda HRV", "Manual", "Rp.150.000/hari"));
+        mobilList.add(new Mobil("Toyota Karimun", "Automativ", "Rp.350.000/hari"));
+        mobilList.add(new Mobil("Honda Brio", "Manual", "Rp.200.000/hari"));
+        mobilList.add(new Mobil("Honda Avanza", "Manual", "Rp.200.000/hari"));
         // Tambahkan data mobil lainnya sesuai kebutuhan
         return mobilList;
     }

@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "343524038616",
+    "firebase_url": "https://finalproject-carrent-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "finalproject-carrent",
+    "storage_bucket": "finalproject-carrent.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343524038616:android:56d67cfc564fb8748804ad",
+        "android_client_info": {
+          "package_name": "com.example.tugasakhir"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "343524038616-i6ku4k98bpjdre5c35vquhja8utpgium.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6uC8FsPPURngXHF3rqzoHj8XcUqILUcc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "343524038616-i6ku4k98bpjdre5c35vquhja8utpgium.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343524038616:android:451a8a226e5722368804ad",
+        "android_client_info": {
+          "package_name": "dar.mobile.finalproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "343524038616-i6ku4k98bpjdre5c35vquhja8utpgium.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6uC8FsPPURngXHF3rqzoHj8XcUqILUcc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "343524038616-i6ku4k98bpjdre5c35vquhja8utpgium.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

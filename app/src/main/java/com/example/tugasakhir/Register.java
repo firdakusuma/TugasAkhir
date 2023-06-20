@@ -10,6 +10,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class Register extends AppCompatActivity {
 
     private EditText et_email;
@@ -24,7 +27,7 @@ public class Register extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_register);
 
         et_email = this.findViewById(R.id.et_email);
         et_pass = this.findViewById(R.id.et_pass);
@@ -39,7 +42,7 @@ public class Register extends AppCompatActivity {
         btn_masuk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Login.class);
+                Intent intent = new Intent(Register.this, Login.class);
                 startActivity(intent);
             }
         });
@@ -57,11 +60,11 @@ public class Register extends AppCompatActivity {
                 String ttl = et_ttl.getText().toString();
 //                String avatar = null;
 
-                modelUser user = new modelUser(name, pass, email, ttl, noHP, alamat);
+                ModelUser user = new ModelUser(name, pass, email, ttl, noHP, alamat);
                 reference.child(name).setValue(user);
 
-                Toast.makeText(MainActivity.this, "Berhasil melakukan register", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this, Login.class);
+                Toast.makeText(Register.this, "Berhasil melakukan register", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Register.this, Login.class);
                 startActivity(intent);
             }
         });
