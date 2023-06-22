@@ -32,7 +32,7 @@ public class MobilAdapter extends RecyclerView.Adapter<MobilAdapter.MobilViewHol
     public void onBindViewHolder(@NonNull MobilViewHolder holder, int position) {
         Mobil mobil = mobilList.get(position);
         holder.tvNamaMobil.setText(mobil.getNamaMobil());
-        holder.tvTipeMobil.setText(mobil.getTipeMobil());
+        holder.tvTipeMobil.setText(mobil.getModel());
         holder.btMobil.setText(mobil.getHargaSewa());
 
         holder.btMobil.setOnClickListener(new View.OnClickListener() {
@@ -52,13 +52,15 @@ public class MobilAdapter extends RecyclerView.Adapter<MobilAdapter.MobilViewHol
     static class MobilViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView tvNamaMobil, tvTipeMobil;
-        Button btMobil;
+        Button btMobil, btEdit, btDelete;
 
         MobilViewHolder(View itemView) {
             super(itemView);
             tvNamaMobil = itemView.findViewById(R.id.tvNamaMobil);
             tvTipeMobil = itemView.findViewById(R.id.textView4);
             btMobil = itemView.findViewById(R.id.btMobil);
+            btDelete = itemView.findViewById(R.id.btnDelete);
+            btEdit = itemView.findViewById(R.id.btnEdit);
         }
 
 
