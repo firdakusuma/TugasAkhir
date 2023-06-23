@@ -29,6 +29,7 @@ public class dashboard extends AppCompatActivity {
     private MobilAdapter mobilAdapter = new MobilAdapter(generateMobilList());
     TextView tvName;
     ImageView imgPhoto;
+    DatabaseReference usersRef;
 
 
     @SuppressLint("MissingInflatedId")
