@@ -221,11 +221,11 @@ public class Profile extends AppCompatActivity {
         binding.tvNomorHPProfile.setText(user.getNoHP());
         binding.tvTTLProfile.setText(user.getTTL());
 
-        // Memuat foto profil menggunakan Glide
-//        Glide.with(this)
-//                .load(user.getAvatar())
-//                .apply(RequestOptions.circleCropTransform())
-//                .into(binding.avaProfile);
+//         Memuat foto profil menggunakan Glide
+        Glide.with(this)
+                .load(user.getAvatar())
+                .apply(RequestOptions.circleCropTransform())
+                .into(binding.avaProfile);
     }
 
 //    // menampilkan data dari edit profile

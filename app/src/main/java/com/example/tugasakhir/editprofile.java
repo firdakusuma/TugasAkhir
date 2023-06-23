@@ -2,6 +2,7 @@ package com.example.tugasakhir;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,6 +22,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -52,6 +55,7 @@ public class editprofile extends AppCompatActivity {
     CircleImageView avaEditProfile;
     FirebaseAuth mAuth;
     DatabaseReference reference;
+    ProgressDialog progressDialog;
     String namaUser;
     String emailUser, alamatUser, noHPUser, TTLUser;
 
@@ -80,7 +84,9 @@ public class editprofile extends AppCompatActivity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateProfile();
+                
+//                updateProfile();
+                upload();
                 Intent intent = new Intent(editprofile.this, Profile.class);
                 startActivity(intent);
 //                passDataProfile();
@@ -198,7 +204,8 @@ public class editprofile extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Uri> task) {
                                 if (task.getResult()!= null){
-                                    task.getResult().toString();
+                                    String imageUrl = task.getResult().toString(); // Simpan URL gambar
+                                    updateProfile(imageUrl); // Panggil metode updateProfile setelah mendapatkan URL gambar
                                 } else {
                                     Toast.makeText(editprofile.this, "Gagal", Toast.LENGTH_SHORT).show();
                                 }
@@ -266,7 +273,7 @@ public class editprofile extends AppCompatActivity {
 
 
     // update data profile di database
-    private void updateProfile() {
+    private void updateProfile(String imageUrl) {
         String userID = mAuth.getCurrentUser().getUid();
 //        namaUser = getIntent().getStringExtra("nama");
 
@@ -282,7 +289,7 @@ public class editprofile extends AppCompatActivity {
         reference.child(userID).child("noHP").setValue(nomorHP);
         reference.child(userID).child("alamat").setValue(alamat);
         reference.child(userID).child("ttl").setValue(ttl);
-//        reference.child(userID).child("avatar").setValue(ava);
+        reference.child(userID).child("avatar").setValue(imageUrl);
 
         Toast.makeText(this, "Profile berhasil diperbarui", Toast.LENGTH_SHORT).show();
     }
@@ -305,6 +312,12 @@ public class editprofile extends AppCompatActivity {
         etAlamatProfile.setText(alamat);
         etNomorHPProfile.setText(noHP);
         etTTLProfile.setText(TTL);
+
+//        //         Memuat foto profil menggunakan Glide
+//        Glide.with(this)
+//                .load(ava)
+//                .apply(RequestOptions.circleCropTransform())
+//                .into(avaEditProfile);
     }
 
 }

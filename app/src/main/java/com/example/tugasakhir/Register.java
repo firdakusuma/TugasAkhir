@@ -106,7 +106,14 @@ public class Register extends AppCompatActivity {
                     String pass = et_pass.getText().toString();
 
                     // menyimpan data ke realtime database
-                    ModelUser modelUser = new ModelUser(nama, pass, email, ttl, noHP, alamat, "/profile.png");
+                    String avatar = "drawable/gg_profile";
+                    int resId = getResources().getIdentifier(avatar, null, getPackageName());
+                    if (resId == 0){
+                        avatar = "drawable/" + getResources().getResourceEntryName(resId);
+                    } else {
+                        avatar = "/profile.png";
+                    }
+                    ModelUser modelUser = new ModelUser(nama, pass, email, ttl, noHP, alamat, avatar);
                     reference.child(userId).setValue(modelUser);
 
                     Intent intent = new Intent(Register.this, Login.class);
