@@ -53,17 +53,6 @@ public class dashboard extends AppCompatActivity {
                 passData();
             }
         });
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        getAllData();
-
-        databaseReference = FirebaseDatabase.getInstance("https://finalproject-carrent-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference();
-        mobil = this.databaseReference.child("mobil");
-
-        mobilAdapter.setOnItemClickListener((position, view) ->  {
-            Intent intent = new Intent(dashboard.this, DetailMobilActivity.class);
-            startActivity(intent);
-        });
 
         btAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +61,19 @@ public class dashboard extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        mobilAdapter.setOnItemClickListener((position, view) ->  {
+            Intent intent = new Intent(dashboard.this, DetailMobilActivity.class);
+            startActivity(intent);
+        });
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        getAllData();
+
+        databaseReference = FirebaseDatabase.getInstance("https://finalproject-carrent-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference();
+        mobil = this.databaseReference.child("mobil");
+
 
     }
 
