@@ -1,48 +1,50 @@
 package com.example.tugasakhir;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-public class Pembayaran extends AppCompatActivity implements View.OnClickListener{
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-    private Button backButton;
-    private Button button1;
+public class Pembayaran extends AppCompatActivity {
+    BottomNavigationView buttonNavigation;
+    private BottomNavigationView.OnNavigationItemSelectedListener navigation = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            // Handle navigation item selection here
+            Fragment fragment = null;
 
+            switch (item.getItemId()) {
+                case R.id.lokasi:
+                    fragment = new MapsFragment();
+                    break;
+                case R.id.home:
+                    fragment = new MapsFragment();
+                    break;
+                case R.id.profile:
+                    fragment = new MapsFragment();
+                    break;
+            }
 
+            if (fragment != null) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                return true;
+            }
+
+            return false;
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pembayaran);
-        button1 = findViewById(R.id.btn_lacak);
-        backButton = findViewById(R.id.button4);
-
-        button1.setOnClickListener(this);
-        backButton.setOnClickListener(this);
-    }
-
-    /* backButton.setOnClickListener(new View.OnClickListener()*/
-    @Override
-    public void onClick(View v) {
-              /*  // Kembali ke MainActivity
-                Intent intent = new Intent(pembayaran.this, MainActivity.class);
-                Intent intent2 = new Intent(pembayaran.this, MapsActivity.class);
-                startActivity(intent);
-                startActivity(intent2);
-                finish();
-            }
-
-        });*/
-        if (v == button1) {
-            Intent intent = new Intent(Pembayaran.this, MainActivity.class);
-            startActivity(intent);
-        }
-        else {
-            Intent intent = new Intent(Pembayaran.this, MapsActivity.class);
-            startActivity(intent);
-        }
+        buttonNavigation = findViewById(R.id.navigation_menu);
+        buttonNavigation.setOnNavigationItemSelectedListener(navigation);
     }
 }
