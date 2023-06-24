@@ -7,16 +7,16 @@ public class ModelUser {
     private String TTL;
     private String noHP;
     private String alamat;
-//    private String avatar;
+    private String avatar;
 
-    public ModelUser(String nama, String pass, String email, String TTL, String noHP, String alamat) {
+    public ModelUser(String nama, String pass, String email, String TTL, String noHP, String alamat, String avatar) {
         this.nama = nama;
         this.pass = pass;
         this.email = email;
         this.TTL = TTL;
         this.noHP = noHP;
         this.alamat = alamat;
-//        this.avatar = avatar;
+        this.avatar = avatar;
     }
 
 //    public modelUser(String nama, String pass, String email, String TTL, String noHP, String alamat) {
@@ -30,9 +30,9 @@ public class ModelUser {
 
     public ModelUser(){}
 
-//    public String getAvatar() {
-//        return avatar;
-//    }
+    public String getAvatar() {
+        return avatar;
+    }
 
     public String getNama() {
         return this.nama;
@@ -58,9 +58,9 @@ public class ModelUser {
         return this.TTL;
     }
 
-//    public void setAvatar(String avatar) {
-//        this.avatar = avatar;
-//    }
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public void setNama(String nama) {
         this.nama = nama;
