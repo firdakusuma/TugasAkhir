@@ -21,7 +21,7 @@
     <View
         android:id="@+id/view"
         android:layout_width="421dp"
-        android:layout_height="646dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="136dp"
         android:background="@drawable/backdrop"
         app:layout_constraintEnd_toEndOf="parent"
@@ -137,15 +137,17 @@
         android:textColor="#121515"
         android:textSize="14sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lgnPass" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnLogin"
-        android:layout_width="426dp"
-        android:layout_height="79dp"
+        android:layout_width="380dp"
+        android:layout_height="70dp"
         android:layout_marginTop="12dp"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/buttondaftar"
         android:text="Masuk"
         android:textColor="@color/white"
