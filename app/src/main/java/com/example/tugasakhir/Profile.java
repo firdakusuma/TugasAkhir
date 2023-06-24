@@ -29,10 +29,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class Profile extends AppCompatActivity {
 
-    Button btnEditProfile;
-    TextView tvNama, tvEmailP;
-    TextView tvNamaProfile, tvEmailProfile, tvNomorHPProfile, tvAlamatProfile, tvTTLProfile;
-    ImageView btnBack;
     private static final int REQUEST_CODE_EDIT_PROFILE = 1;
 
     FirebaseAuth mAuth;
@@ -48,15 +44,6 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-//        // menangkap data dari halaman login dan register
-//        tvNama = findViewById(R.id.tvNama);
-//        tvEmailP = findViewById(R.id.tvEmailP);
-//        tvNamaProfile = findViewById(R.id.tvNamaProfile);
-//        tvEmailProfile = findViewById(R.id.tvEmailProfile);
-//        tvNomorHPProfile = findViewById(R.id.tvNomorHPProfile);
-//        tvAlamatProfile = findViewById(R.id.tvAlamatProfile);
-//        tvTTLProfile = findViewById(R.id.tvTTLProfile);
 
         mAuth = FirebaseAuth.getInstance();
         usersRef = FirebaseDatabase.getInstance().getReference().child("users");
@@ -88,16 +75,7 @@ public class Profile extends AppCompatActivity {
             Profile.this.finish();
         });
 
-//
-//        String source = getIntent().getStringExtra("source");
-//        if (source.equals("Login")){
-//            showEditData();
-//        } else if (source.equals("editProfile")) {
-//            showUpdateData();
-//        }
-
         // berpindah ke halaman edit Profile
-//        btnEditProfile = findViewById(R.id.btnEditProfile);
         binding.btnEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -146,17 +124,12 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // kode untuk menghapus data dari database
-//                String namaUser = tvNamaProfile.getText().toString().trim();
-//
-//                DatabaseReference reference = FirebaseDatabase.getInstance("https://finalproject-carrent-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users");
                 usersRef.child(currentUser.getUid()).removeValue();
                 Toast.makeText(Profile.this, "Akun berhasil dihapus", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Profile.this, Login.class);
                 startActivity(intent);
                 Toast.makeText(Profile.this, "Akun Anda berhasil dihapus", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
-
-
             }
         });
 
@@ -175,41 +148,7 @@ public class Profile extends AppCompatActivity {
             }
         });
 
-
-//        // pindah ke halaman sebelumnya (dashboard)
-//        btnBack = findViewById(R.id.btnBack);
-//        btnBack.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Profile.this.finish();
-//            }
-//        });
-
     }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == REQUEST_CODE_EDIT_PROFILE && resultCode == RESULT_OK) {
-//            // Perbarui data profil jika ada data yang diubah
-//            String newName = data.getStringExtra("newName");
-//            String newUsername = data.getStringExtra("newUsername");
-//            String newProfilePicture = data.getStringExtra("newProfilePicture");
-//
-//            binding.tvFullName.setText(newName);
-//            binding.tvUsername.setText(newUsername);
-//
-//            if (newProfilePicture != null && !newProfilePicture.isEmpty()) {
-//                // Memuat foto profil baru menggunakan Glide
-//                Glide.with(this)
-//                        .load(newProfilePicture)
-//                        .apply(RequestOptions.circleCropTransform())
-//                        .into(binding.ivMyImage);
-//            }
-//
-//            Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
-//        }
-//    }
 
     private void showData(ModelUser user) {
         // Menampilkan data User pada tampilan ProfilePage
@@ -221,92 +160,10 @@ public class Profile extends AppCompatActivity {
         binding.tvNomorHPProfile.setText(user.getNoHP());
         binding.tvTTLProfile.setText(user.getTTL());
 
-//         Memuat foto profil menggunakan Glide
+        // Memuat foto profil menggunakan Glide
         Glide.with(this)
                 .load(user.getAvatar())
                 .apply(RequestOptions.circleCropTransform())
                 .into(binding.avaProfile);
     }
-
-//    // menampilkan data dari edit profile
-//    private void showUpdateData() {
-//        Intent intent = getIntent();
-//
-//        String source = intent.getStringExtra("source");
-//        String namaUser = intent.getStringExtra("nama");
-//        String passUser = intent.getStringExtra("pass");
-//        String emailUser = intent.getStringExtra("email");
-//        String alamatUser = intent.getStringExtra("alamat");
-//        String noHPUser = intent.getStringExtra("noHP");
-//        String TTLUser = intent.getStringExtra("TTL");
-//        String ava = intent.getStringExtra("avatar");
-//
-//        tvNamaProfile.setText(namaUser);
-//        tvNama.setText(namaUser);
-//        tvEmailProfile.setText(emailUser);
-//        tvEmailP.setText(emailUser);
-//        tvAlamatProfile.setText(alamatUser);
-//        tvNomorHPProfile.setText(noHPUser);
-//        tvTTLProfile.setText(TTLUser);
-//
-//    }
-//
-//    // menampilkan data hasil register
-//    private void showEditData() {
-//        Intent intent = getIntent();
-//
-//        String source = intent.getStringExtra("source");
-//        String namaUser = intent.getStringExtra("nama");
-//        String passUser = intent.getStringExtra("pass");
-//        String emailUser = intent.getStringExtra("email");
-//        String alamatUser = intent.getStringExtra("alamat");
-//        String noHPUser = intent.getStringExtra("noHP");
-//        String TTLUser = intent.getStringExtra("TTL");
-//        String avatar = intent.getStringExtra("avatar");
-//
-//        tvNamaProfile.setText(namaUser);
-//        tvNama.setText(namaUser);
-//        tvEmailProfile.setText(emailUser);
-//        tvEmailP.setText(emailUser);
-//        tvAlamatProfile.setText(alamatUser);
-//        tvNomorHPProfile.setText(noHPUser);
-//        tvTTLProfile.setText(TTLUser);
-//    }
-//
-//    // mengirim data ke edit profile
-//    private void passData() {
-//        String namaUser = tvNamaProfile.getText().toString().trim();
-//
-//        DatabaseReference reference = FirebaseDatabase.getInstance("https://finalproject-carrent-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users");
-//        Query checkDatabase = reference.orderByChild("nama").equalTo(namaUser);
-//        checkDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.exists()){
-//                    String dbNama = snapshot.child(namaUser).child("nama").getValue(String.class);
-//                    String dbEmail = snapshot.child(namaUser).child("email").getValue(String.class);
-//                    String dbAlamat = snapshot.child(namaUser).child("alamat").getValue(String.class);
-//                    String dbNoHP = snapshot.child(namaUser).child("noHP").getValue(String.class);
-//                    String dbTTL = snapshot.child(namaUser).child("ttl").getValue(String.class);
-//                    String dbPass = snapshot.child(namaUser).child("pass").getValue(String.class);
-//                    String dbAva = snapshot.child(namaUser).child("avatar").getValue(String.class);
-//
-//                    Intent intent = new Intent(Profile.this, editprofile.class);
-//                    intent.putExtra("nama", dbNama);
-//                    intent.putExtra("pass", dbPass);
-//                    intent.putExtra("email", dbEmail);
-//                    intent.putExtra("alamat", dbAlamat);
-//                    intent.putExtra("noHP", dbNoHP);
-//                    intent.putExtra("TTL", dbTTL);
-//                    intent.putExtra("avatar", dbAva);
-//                    startActivity(intent);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
 }

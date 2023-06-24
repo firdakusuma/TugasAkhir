@@ -66,21 +66,6 @@ public class Register extends AppCompatActivity {
                 String email = et_email.getText().toString();
                 String password = et_pass.getText().toString();
                 signUp(email,password);
-
-//                String name = et_nama.getText().toString();
-//                String email = et_email.getText().toString();
-//                String pass = et_pass.getText().toString();
-//                String alamat = et_alamat.getText().toString();
-//                String noHP = et_noHP.getText().toString();
-//                String ttl = et_ttl.getText().toString();
-////                String avatar = null;
-//
-//                ModelUser user = new ModelUser(name, pass, email, ttl, noHP, alamat);
-//                reference.child(name).setValue(user);
-//
-//                Toast.makeText(Register.this, "Berhasil melakukan register", Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(Register.this, Login.class);
-//                startActivity(intent);
             }
         });
     }

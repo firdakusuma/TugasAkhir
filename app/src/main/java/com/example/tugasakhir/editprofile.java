@@ -55,11 +55,6 @@ public class editprofile extends AppCompatActivity {
     CircleImageView avaEditProfile;
     FirebaseAuth mAuth;
     DatabaseReference reference;
-    ProgressDialog progressDialog;
-    String namaUser;
-    String emailUser, alamatUser, noHPUser, TTLUser;
-
-//    ImageView avaEditProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,12 +79,9 @@ public class editprofile extends AppCompatActivity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
-//                updateProfile();
                 upload();
                 Intent intent = new Intent(editprofile.this, Profile.class);
                 startActivity(intent);
-//                passDataProfile();
             }
         });
 
@@ -234,55 +226,16 @@ public class editprofile extends AppCompatActivity {
 
         datePickerDialog.show();
     }
-//    private void passDataProfile() {
-//        String namaUser = etNamaProfile.getText().toString().trim();
-//
-//        DatabaseReference reference = FirebaseDatabase.getInstance("https://finalproject-carrent-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users");
-//        Query checkDatabase = reference.orderByChild("nama").equalTo(namaUser);
-//        checkDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.exists()){
-//                    String dbNama = snapshot.child(namaUser).child("nama").getValue(String.class);
-//                    String dbEmail = snapshot.child(namaUser).child("email").getValue(String.class);
-//                    String dbAlamat = snapshot.child(namaUser).child("alamat").getValue(String.class);
-//                    String dbNoHP = snapshot.child(namaUser).child("noHP").getValue(String.class);
-//                    String dbTTL = snapshot.child(namaUser).child("ttl").getValue(String.class);
-//                    String dbPass = snapshot.child(namaUser).child("pass").getValue(String.class);
-//                    String dbAva = snapshot.child(namaUser).child("avatar").getValue(String.class);
-//
-//                    Intent intent = new Intent(editprofile.this, Profile.class);
-//                    intent.putExtra("source", "editProfile");
-//                    intent.putExtra("nama", dbNama);
-//                    intent.putExtra("pass", dbPass);
-//                    intent.putExtra("email", dbEmail);
-//                    intent.putExtra("alamat", dbAlamat);
-//                    intent.putExtra("noHP", dbNoHP);
-//                    intent.putExtra("TTL", dbTTL);
-//                    intent.putExtra("avatar", dbAva);
-//                    startActivity(intent);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
-
 
     // update data profile di database
     private void updateProfile(String imageUrl) {
         String userID = mAuth.getCurrentUser().getUid();
-//        namaUser = getIntent().getStringExtra("nama");
 
         String nama = etNamaProfile.getText().toString().trim();
         String email = etEmailProfile.getText().toString().trim();
         String nomorHP = etNomorHPProfile.getText().toString().trim();
         String alamat = etAlamatProfile.getText().toString().trim();
         String ttl = etTTLProfile.getText().toString().trim();
-//        String ava = upload();
 
         // update data pada database
         reference.child(userID).child("email").setValue(email);
@@ -312,12 +265,6 @@ public class editprofile extends AppCompatActivity {
         etAlamatProfile.setText(alamat);
         etNomorHPProfile.setText(noHP);
         etTTLProfile.setText(TTL);
-
-//        //         Memuat foto profil menggunakan Glide
-//        Glide.with(this)
-//                .load(ava)
-//                .apply(RequestOptions.circleCropTransform())
-//                .into(avaEditProfile);
     }
 
 }
