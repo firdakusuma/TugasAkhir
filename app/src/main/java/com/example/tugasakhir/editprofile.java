@@ -42,7 +42,7 @@ import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class editprofile extends AppCompatActivity {
+public class  editprofile extends AppCompatActivity {
 
     TextView etNamaProfile, tvEditProfileNama, tvEditProfileEmail;
     EditText etEmailProfile, etNomorHPProfile, etAlamatProfile, etTTLProfile;
