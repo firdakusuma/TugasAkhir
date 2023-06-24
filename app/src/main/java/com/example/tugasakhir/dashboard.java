@@ -33,26 +33,20 @@ public class dashboard extends AppCompatActivity {
     DatabaseReference mobil;
     private MobilAdapter mobilAdapter;
     DatabaseReference databaseReference;
-    FirebaseAuth mAuth;
+    TextView tvName;
     Button btAdd;
-    private ArrayList <Mobil> mobilArrayList;
+    private ArrayList<Mobil> mobilArrayList;
 
-
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tvName = findViewById(R.id.tvName);
-        imgPhoto = findViewById(R.id.imgPhoto);
-        tvName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getDataFromLogin();
-                passData();
-            }
-        });
+        btAdd = findViewById(R.id.btAdd);
+        tvName = findViewById(R.id.tvNama);
+
+        databaseReference = FirebaseDatabase.getInstance("https://tugasakhir-187318-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference();
+        mobil = this.databaseReference.child("mobil");
 
         btAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,36 +56,19 @@ public class dashboard extends AppCompatActivity {
             }
         });
 
-        mobilAdapter.setOnItemClickListener((position, view) ->  {
-            Intent intent = new Intent(dashboard.this, DetailMobilActivity.class);
-            startActivity(intent);
-        });
-
         recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
         getAllData();
-
-        databaseReference = FirebaseDatabase.getInstance("https://finalproject-carrent-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference();
-        mobil = this.databaseReference.child("mobil");
-
-
-    }
-
-    @Override
-    protected void onStart () {
-        super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            tvName.setText(currentUser.getEmail());
-        }
     }
 
     private void getAllData() {
-        this.mobil.child(mAuth.getUid()).addValueEventListener(new ValueEventListener() {
+        this.mobil.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mobilArrayList = new ArrayList<>();
-                for (DataSnapshot s: snapshot.getChildren()){
+                for (DataSnapshot s : snapshot.getChildren()) {
                     Mobil d = s.getValue(Mobil.class);
                     System.out.println(d.getNamaMobil());
                     d.setKey(s.getKey());
@@ -103,7 +80,7 @@ public class dashboard extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                System.out.println("eror");
+                System.out.println("error");
             }
         });
     }

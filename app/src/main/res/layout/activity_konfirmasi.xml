@@ -42,7 +42,7 @@
         app:srcCompat="@drawable/mobil" />
 
     <TextView
-        android:id="@+id/textView25"
+        android:id="@+id/tvNamaMobil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -63,8 +63,8 @@
         android:text="Rp 200.000 /hari"
         android:textColor="#000000"
         android:textSize="18dp"
-        app:layout_constraintStart_toStartOf="@+id/textView25"
-        app:layout_constraintTop_toBottomOf="@+id/textView25" />
+        app:layout_constraintStart_toStartOf="@+id/tvNamaMobil"
+        app:layout_constraintTop_toBottomOf="@+id/tvNamaMobil" />
 
     <TextView
         android:id="@+id/textView28"

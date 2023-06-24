@@ -1,8 +1,5 @@
 package com.example.tugasakhir;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -11,18 +8,18 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class AddPage extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     EditText etNamaMobil, etHargaMobil, etJumlahPenumpang, etModel;
@@ -41,9 +38,7 @@ public class AddPage extends AppCompatActivity {
         btnUploadGambar = findViewById(R.id.btUploadGambar);
         btnAddMobil = findViewById(R.id.btnAddMobil);
 
-        mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance("https://finalproject-carrent-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference();
-        databaseReference = firebaseDatabase.getReference();
 
         btnUploadGambar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,14 +56,14 @@ public class AddPage extends AppCompatActivity {
                 String model = etModel.getText().toString();
                 Mobil baru = new Mobil(nama, harga, penumpang, model);
 
-                databaseReference.child("destination").child(mAuth.getUid()).push().setValue(baru).addOnSuccessListener(AddPage.this, new OnSuccessListener<Void>() {
+                databaseReference.child("mobil").push().setValue(baru).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
                         Toast.makeText(AddPage.this, "Mobil telah ditambahkan", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(AddPage.this, MainActivity.class);
                         startActivity(intent);
                     }
-                }).addOnFailureListener(AddPage.this, new OnFailureListener() {
+                }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(AddPage.this, "Gagal menambahkan", Toast.LENGTH_SHORT).show();

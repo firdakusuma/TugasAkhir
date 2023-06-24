@@ -1,47 +1,39 @@
 package com.example.tugasakhir;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
+import com.example.projectadam.databinding.ItemViewBinding;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-public class MobilAdapter extends RecyclerView.Adapter<MobilAdapter.MobilViewHolder> {
+import java.util.ArrayList;
 
-    private List<Mobil> mobilList;
+public class MobilAdapter extends RecyclerView.Adapter<MobilAdapter.ViewHolder> {
 
-    public MobilAdapter(List<Mobil> mobilList) {
+    private final ArrayList<Mobil> mobilList;
+
+    public MobilAdapter(ArrayList<Mobil> mobilList) {
         this.mobilList = mobilList;
     }
-    private static ClickListener clickListener;
 
     @NonNull
     @Override
-    public MobilViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_mobil, parent, false);
-        return new MobilViewHolder(view);
+    public MobilAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ItemViewBinding binding = ItemViewBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new ViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MobilViewHolder holder, int position) {
-        Mobil mobil = mobilList.get(position);
-        holder.tvNamaMobil.setText(mobil.getNamaMobil());
-        holder.tvTipeMobil.setText(mobil.getModel());
-        holder.btMobil.setText(mobil.getHargaSewa());
-
-        holder.btMobil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), DetailMobilActivity.class);
-                view.getContext().startActivity(intent);
-            }
-        });
+    public void onBindViewHolder(@NonNull MobilAdapter.ViewHolder holder, int position) {
+        holder.bind(mobilList.get(position));
     }
 
     @Override
@@ -49,33 +41,60 @@ public class MobilAdapter extends RecyclerView.Adapter<MobilAdapter.MobilViewHol
         return mobilList.size();
     }
 
-    static class MobilViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private final ItemViewBinding binding;
+        private final FirebaseDatabase firebaseDatabase;
+        private final DatabaseReference databaseReference;
 
-        TextView tvNamaMobil, tvTipeMobil;
-        Button btMobil, btEdit, btDelete;
+        public ViewHolder(@NonNull ItemViewBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
 
-        MobilViewHolder(View itemView) {
-            super(itemView);
-            tvNamaMobil = itemView.findViewById(R.id.tvNamaMobil);
-            tvTipeMobil = itemView.findViewById(R.id.textView4);
-            btMobil = itemView.findViewById(R.id.btMobil);
-            btDelete = itemView.findViewById(R.id.btnDelete);
-            btEdit = itemView.findViewById(R.id.btnEdit);
+            firebaseDatabase = FirebaseDatabase.getInstance("https://tugasakhir-187318-default-rtdb.asia-southeast1.firebasedatabase.app/");
+            databaseReference = firebaseDatabase.getReference("mobil");
         }
 
+        public void bind(Mobil mobil) {
+            binding.tvNamaMobil.setText(mobil.getNamaMobil());
+            binding.tvModel.setText(mobil.getModel());
 
-        @Override
-        public void onClick(View view) {
-            clickListener.onItemClick(getAdapterPosition(), itemView);
+            binding.btnEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(), EditPage.class);
+                    intent.putExtra("EXTRA_MOBIL", mobil);
+                    view.getContext().startActivity(intent);
+                }
+            });
+
+            binding.btnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    builder.setPositiveButton("IYA", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            databaseReference.child(mobil.getKey()).removeValue();
+                        }
+                    }).setNegativeButton("TIDAK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    }).setMessage("APAKAH ANDA INGIN MENGHAPUS MOBIL?");
+                    builder.show();
+                }
+            });
+
+            binding.cvItemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(), DetailMobilActivity.class);
+                    intent.putExtra("EXTRA_MOBIL", mobil);
+                    view.getContext().startActivity(intent);
+                }
+            });
         }
-    }
 
-    public void setOnItemClickListener(MobilAdapter.ClickListener clickListener) {
-        MobilAdapter.clickListener = clickListener;
     }
-
-    public interface ClickListener {
-        void onItemClick(int position, View view);
-    }
-
 }
