@@ -2,6 +2,7 @@ package com.example.tugasakhir;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,10 +22,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,12 +53,8 @@ public class editprofile extends AppCompatActivity {
     Button btnUpdate;
     ImageView btnEditBack, edtTTL;
     CircleImageView avaEditProfile;
-
+    FirebaseAuth mAuth;
     DatabaseReference reference;
-    String namaUser;
-    String emailUser, alamatUser, noHPUser, TTLUser;
-
-//    ImageView avaEditProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +62,7 @@ public class editprofile extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
 
         // memperbarui profile
+        mAuth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance("https://finalproject-carrent-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users");
 
         etNamaProfile = findViewById(R.id.etNamaProfile);
@@ -78,8 +79,9 @@ public class editprofile extends AppCompatActivity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateProfile();
-                passDataProfile();
+                upload();
+                Intent intent = new Intent(editprofile.this, Profile.class);
+                startActivity(intent);
             }
         });
 
@@ -194,7 +196,8 @@ public class editprofile extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Uri> task) {
                                 if (task.getResult()!= null){
-                                    task.getResult().toString();
+                                    String imageUrl = task.getResult().toString(); // Simpan URL gambar
+                                    updateProfile(imageUrl); // Panggil metode updateProfile setelah mendapatkan URL gambar
                                 } else {
                                     Toast.makeText(editprofile.this, "Gagal", Toast.LENGTH_SHORT).show();
                                 }
@@ -223,59 +226,23 @@ public class editprofile extends AppCompatActivity {
 
         datePickerDialog.show();
     }
-    private void passDataProfile() {
-        String namaUser = etNamaProfile.getText().toString().trim();
 
-        DatabaseReference reference = FirebaseDatabase.getInstance("https://finalproject-carrent-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users");
-        Query checkDatabase = reference.orderByChild("nama").equalTo(namaUser);
-        checkDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    String dbNama = snapshot.child(namaUser).child("nama").getValue(String.class);
-                    String dbEmail = snapshot.child(namaUser).child("email").getValue(String.class);
-                    String dbAlamat = snapshot.child(namaUser).child("alamat").getValue(String.class);
-                    String dbNoHP = snapshot.child(namaUser).child("noHP").getValue(String.class);
-                    String dbTTL = snapshot.child(namaUser).child("ttl").getValue(String.class);
-                    String dbPass = snapshot.child(namaUser).child("pass").getValue(String.class);
-                    String dbAva = snapshot.child(namaUser).child("avatar").getValue(String.class);
-
-                    Intent intent = new Intent(editprofile.this, Profile.class);
-                    intent.putExtra("source", "editProfile");
-                    intent.putExtra("nama", dbNama);
-                    intent.putExtra("pass", dbPass);
-                    intent.putExtra("email", dbEmail);
-                    intent.putExtra("alamat", dbAlamat);
-                    intent.putExtra("noHP", dbNoHP);
-                    intent.putExtra("TTL", dbTTL);
-                    intent.putExtra("avatar", dbAva);
-                    startActivity(intent);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void updateProfile() {
-        namaUser = getIntent().getStringExtra("nama");
+    // update data profile di database
+    private void updateProfile(String imageUrl) {
+        String userID = mAuth.getCurrentUser().getUid();
 
         String nama = etNamaProfile.getText().toString().trim();
         String email = etEmailProfile.getText().toString().trim();
         String nomorHP = etNomorHPProfile.getText().toString().trim();
         String alamat = etAlamatProfile.getText().toString().trim();
         String ttl = etTTLProfile.getText().toString().trim();
-        String ava = upload();
 
         // update data pada database
-        reference.child(namaUser).child("email").setValue(email);
-        reference.child(namaUser).child("noHP").setValue(nomorHP);
-        reference.child(namaUser).child("alamat").setValue(alamat);
-        reference.child(namaUser).child("ttl").setValue(ttl);
-        reference.child(namaUser).child("avatar").setValue(ava);
+        reference.child(userID).child("email").setValue(email);
+        reference.child(userID).child("noHP").setValue(nomorHP);
+        reference.child(userID).child("alamat").setValue(alamat);
+        reference.child(userID).child("ttl").setValue(ttl);
+        reference.child(userID).child("avatar").setValue(imageUrl);
 
         Toast.makeText(this, "Profile berhasil diperbarui", Toast.LENGTH_SHORT).show();
     }
@@ -288,7 +255,7 @@ public class editprofile extends AppCompatActivity {
         String email = intent.getStringExtra("email");
         String alamat = intent.getStringExtra("alamat");
         String noHP = intent.getStringExtra("noHP");
-        String TTL = intent.getStringExtra("TTL");
+        String TTL = intent.getStringExtra("ttl");
         String ava = intent.getStringExtra("avatar");
 
         tvEditProfileNama.setText(nama);

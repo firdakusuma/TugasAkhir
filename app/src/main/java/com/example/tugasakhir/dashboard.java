@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,6 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.tugasakhir.databinding.ActivityMainBinding;
+import com.example.tugasakhir.databinding.ActivityProfileBinding;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,10 +35,13 @@ import java.util.List;
 public class dashboard extends AppCompatActivity {
     TextView tvName;
     ImageView imgPhoto;
+    DatabaseReference usersRef;
+    FirebaseAuth mAuth;
+
+    @SuppressLint("MissingInflatedId")
     RecyclerView recyclerView;
     DatabaseReference mobil;
     private MobilAdapter mobilAdapter;
-    DatabaseReference databaseReference;
     TextView tvName;
     Button btAdd;
     private ArrayList<Mobil> mobilArrayList;
@@ -42,11 +51,38 @@ public class dashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        tvName = findViewById(R.id.tvName);
+        imgPhoto = findViewById(R.id.imgPhoto);
+        mAuth = FirebaseAuth.getInstance();
+        usersRef = FirebaseDatabase.getInstance().getReference("users");
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null){
+            usersRef.child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()){
+                        ModelUser user = snapshot.getValue(ModelUser.class);
+                        tvName.setText("Hello, "+user.getNama());
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+
+        tvName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(dashboard.this, Profile.class);
+              
         btAdd = findViewById(R.id.btAdd);
         tvName = findViewById(R.id.tvNama);
 
-        databaseReference = FirebaseDatabase.getInstance("https://tugasakhir-187318-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference();
-        mobil = this.databaseReference.child("mobil");
+        mobil = FirebaseDatabase.getInstance("https://tugasakhir-187318-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("mobil");
 
         btAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,57 +119,5 @@ public class dashboard extends AppCompatActivity {
                 System.out.println("error");
             }
         });
-    }
-
-    private void passData() {
-        String namaUser = tvName.getText().toString().trim();
-
-        DatabaseReference reference = FirebaseDatabase.getInstance("https://finalproject-carrent-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users");
-        Query checkDatabase = reference.orderByChild("nama").equalTo(namaUser);
-        checkDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    String dbNama = snapshot.child(namaUser).child("nama").getValue(String.class);
-                    String dbEmail = snapshot.child(namaUser).child("email").getValue(String.class);
-                    String dbAlamat = snapshot.child(namaUser).child("alamat").getValue(String.class);
-                    String dbNoHP = snapshot.child(namaUser).child("noHP").getValue(String.class);
-                    String dbTTL = snapshot.child(namaUser).child("ttl").getValue(String.class);
-                    String dbPass = snapshot.child(namaUser).child("pass").getValue(String.class);
-                    String dbAva = snapshot.child(namaUser).child("avatar").getValue(String.class);
-
-                    Intent intent = new Intent(dashboard.this, Profile.class);
-                    intent.putExtra("source", "Login");
-                    intent.putExtra("nama", dbNama);
-                    intent.putExtra("pass", dbPass);
-                    intent.putExtra("email", dbEmail);
-                    intent.putExtra("alamat", dbAlamat);
-                    intent.putExtra("noHP", dbNoHP);
-                    intent.putExtra("TTL", dbTTL);
-                    intent.putExtra("avatar", dbAva);
-                    startActivity(intent);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void getDataFromLogin() {
-        Intent intent = getIntent();
-
-        String source = intent.getStringExtra("source");
-        String namaUser = intent.getStringExtra("nama");
-        String passUser = intent.getStringExtra("pass");
-        String emailUser = intent.getStringExtra("email");
-        String alamatUser = intent.getStringExtra("alamat");
-        String noHPUser = intent.getStringExtra("noHP");
-        String TTLUser = intent.getStringExtra("TTL");
-        String ava = intent.getStringExtra("avatar");
-
-        tvName.setText(namaUser);
     }
 }
