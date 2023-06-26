@@ -193,6 +193,7 @@
         android:layout_width="380dp"
         android:layout_height="60dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/buttondaftar"
         android:text="Daftar"
         android:textColor="@color/white"

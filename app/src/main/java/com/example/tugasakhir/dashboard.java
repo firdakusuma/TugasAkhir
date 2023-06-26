@@ -6,6 +6,7 @@ import android.media.Image;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.tugasakhir.databinding.ActivityMainBinding;
 import com.example.tugasakhir.databinding.ActivityProfileBinding;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,15 +33,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class dashboard extends AppCompatActivity {
-
-    private RecyclerView recyclerView;
-    private MobilAdapter mobilAdapter = new MobilAdapter(generateMobilList());
     TextView tvName;
     ImageView imgPhoto;
     DatabaseReference usersRef;
     FirebaseAuth mAuth;
 
     @SuppressLint("MissingInflatedId")
+    RecyclerView recyclerView;
+    DatabaseReference mobil;
+    private MobilAdapter mobilAdapter;
+    TextView tvName;
+    Button btAdd;
+    private ArrayList<Mobil> mobilArrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,31 +78,46 @@ public class dashboard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(dashboard.this, Profile.class);
+              
+        btAdd = findViewById(R.id.btAdd);
+        tvName = findViewById(R.id.tvNama);
+
+        mobil = FirebaseDatabase.getInstance("https://tugasakhir-187318-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("mobil");
+
+        btAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(dashboard.this, AddPage.class);
                 startActivity(intent);
             }
         });
+
         recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
 
-        List<Mobil> mobilList = generateMobilList();
-        mobilAdapter = new MobilAdapter(mobilList);
-        recyclerView.setAdapter(mobilAdapter);
-
-        mobilAdapter.setOnItemClickListener((position, view) ->  {
-            Intent intent = new Intent(dashboard.this, DetailMobilActivity.class);
-            startActivity(intent);
-        });
-
+        getAllData();
     }
-    
-    private List<Mobil> generateMobilList() {
-        List<Mobil> mobilList = new ArrayList<>();
-        mobilList.add(new Mobil("Honda Civic", "Automatic", "Rp.200.000/hari"));
-        mobilList.add(new Mobil("Honda Civic", "Manual", "Rp.150.000/hari"));
-        mobilList.add(new Mobil("Honda Civic", "Automativ", "Rp.350.000/hari"));
-        mobilList.add(new Mobil("Honda Civic", "Manual", "Rp.200.000/hari"));
-        mobilList.add(new Mobil("Honda Civic", "Manual", "Rp.200.000/hari"));
-        // Tambahkan data mobil lainnya sesuai kebutuhan
-        return mobilList;
+
+    private void getAllData() {
+        this.mobil.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mobilArrayList = new ArrayList<>();
+                for (DataSnapshot s : snapshot.getChildren()) {
+                    Mobil d = s.getValue(Mobil.class);
+                    System.out.println(d.getNamaMobil());
+                    d.setKey(s.getKey());
+                    mobilArrayList.add(d);
+                }
+                mobilAdapter = new MobilAdapter(mobilArrayList);
+                recyclerView.setAdapter(mobilAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println("error");
+            }
+        });
     }
 }
